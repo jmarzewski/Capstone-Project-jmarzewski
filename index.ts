@@ -50,7 +50,7 @@ const requestsMock: readonly RequestMock[] = [
 
 type ObserverHandlers<T> = {
   next?: (value: T) => void;
-  error?: (error: any) => void;
+  error?: (error: Error) => void;
   complete?: () => void;
 };
 
@@ -70,7 +70,7 @@ class Observer<T> {
     }
   }
 
-  error(error: any): void {
+  error(error: Error): void {
     if (!this.isUnsubscribed) {
       if (this.handlers.error) {
         this.handlers.error(error);
@@ -127,7 +127,7 @@ const handleRequest = (request: RequestMock): { status: HTTPStatus } => {
   return { status: HTTPStatus.OK };
 };
 
-const handleError = (error: any): { status: HTTPStatus } => {
+const handleError = (error: Error): { status: HTTPStatus } => {
   // handling of error
   return { status: HTTPStatus.INTERNAL_SERVER_ERROR };
 };
